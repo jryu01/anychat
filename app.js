@@ -56,7 +56,7 @@ io.sockets.on('connection', function (socket) {
 	});
 	socket.on('disconnect', function (data) {
 		users.splice(users.indexOf(socket.nickname), 1);
-		updateUsers();
+		socket.broadcast.emit('userlist', users);
 	});
 });
 
