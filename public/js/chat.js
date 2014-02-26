@@ -59,15 +59,15 @@ jQuery(function ($) {
 			}
 		},
 		insertMessage: function (data) {
-			var $newMsg = $('<li><b>' + data.nickname + 
-											':</b> ' + data.message + '</li>');		
+			var $newMsg = $('<li class="user-message"><b>' + data.nickname + 
+											':</b>' + data.message + '</li>');		
 			Chatter.$messagesBox.append($newMsg);
 			$newMsg[0].scrollIntoView();
 		},
 		updateUserList: function (data) {
 			Chatter.$userList.text('');
 			for ( var i = 0; i < data.length; i++ ) {
-				Chatter.$userList.append('<li class="user-nickname"><b>' +
+				Chatter.$userList.append('<li class="user-nickname ist-group-item"><b>' +
 																	data[i] + '</b></li>');
 			}
 		}
