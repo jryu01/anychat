@@ -3,7 +3,8 @@
 	"description": "simple chat application",
 	"version": "0.0.1",
 	"dependencies": {
-		"express": "3.4.8",
-		"socket.io": "0.9.16"
+		"express": "~3.4.8",
+		"socket.io": "~0.9.16",
+		"logfmt": "~0.21.0"
 	}
 }

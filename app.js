@@ -1,5 +1,6 @@
 var http = require('http');
 var path = require('path');
+var logfmt = require('logfmt');
 var express = require('express');
 var app = express();
 var server = http.createServer(app);
@@ -12,6 +13,8 @@ app.configure( function () {
 		//parses request body and populates request.body
     app.use( express.bodyParser() );
 
+		app.use(logfmt.requestLogger());
+		
     //checks request.body for HTTP method overrides
     app.use( express.methodOverride() );
 
