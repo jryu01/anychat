@@ -4,11 +4,16 @@ jQuery(function ($) {
 		init: function () {
 			//Establish socket connection
 			this.socket = io.connect();
-
+			this.sound = {
+				onMsg: new Audio("../sounds/beep.mp3")
+			};
+			this.isWindowFocused = true;
+			this.isUserJoined = false;
 			this.cacheElements();
 			this.bindEvents();
 		},
 		cacheElements: function () {
+			this.$window = $(window);
 			this.$joinBox = $('#join-box');
 			this.$joinForm = this.$joinBox.find('#join-form');
 			this.$nickInput = this.$joinBox.find('#nick-input');
@@ -22,6 +27,8 @@ jQuery(function ($) {
 
 		},
 		bindEvents: function () {
+			this.$window.on('focus', function () {Chatter.isWindowFocused = true;console.log('focused'+Chatter.isWindowFocused);});
+			this.$window.on('blur', function () {Chatter.isWindowFocused = false;console.log('focused'+Chatter.isWindowFocused);});
 			this.$joinForm.on('submit', this.joinChat);
 			this.$messageForm.on('submit', this.sendMessage);
 
@@ -34,6 +41,7 @@ jQuery(function ($) {
 			if (nickname.length > 2) {
 				Chatter.socket.emit('join', nickname, function (joined) {
 					if (joined) {
+						Chatter.isUserJoined = joined;
 						Chatter.$nickInput.val('');
 						Chatter.$joinForm.removeClass('has-error');
 						Chatter.$infoBox.text('');
@@ -59,10 +67,16 @@ jQuery(function ($) {
 			}
 		},
 		insertMessage: function (data) {
+
 			var $newMsg = $('<li class="user-message"><b>' + data.nickname + 
 											':</b>' + data.message + '</li>');		
 			Chatter.$messagesBox.append($newMsg);
 			$newMsg[0].scrollIntoView();
+
+			//Play a sound if the window is not focused
+			if (!Chatter.isWindowFocused && Chatter.isUserJoined) {
+				Chatter.sound.onMsg.play();
+			}
 		},
 		updateUserList: function (data) {
 			Chatter.$userList.text('');
