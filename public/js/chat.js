@@ -79,6 +79,8 @@ jQuery(function ($) {
 			}
 		},
 		updateUserList: function (data) {
+			console.log("User list from server:\n");
+			console.log(data);
 			Chatter.$userList.text('');
 			for ( var i = 0; i < data.length; i++ ) {
 				Chatter.$userList.append('<li class="user-nickname ist-group-item"><b>' +

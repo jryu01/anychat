@@ -36,16 +36,22 @@ io.sockets.on('connection', function (socket) {
 	var updateUsers = function () {
 		socket.emit('userlist', users);
 		socket.broadcast.emit('userlist', users);
+		console.log('User list updated:\n');
+		console.log(users);
 	};
 	socket.on('join', function (name, callback) {
+		console.log('join occur:\n');
+		console.log(users);
 		if (!callback) return;
 		var isNewUser = users.indexOf(name) === -1;
 		if (isNewUser) {
+		console.log('new user, will be added\n');
 			socket.nickname = name;
 			users.push(socket.nickname);
 			updateUsers();
 			callback(true);
 		} else {
+		console.log('existing user, will not be added\n');
 			callback(false);
 		}
 	});
@@ -57,6 +63,8 @@ io.sockets.on('connection', function (socket) {
 	socket.on('disconnect', function (data) {
 		users.splice(users.indexOf(socket.nickname), 1);
 		socket.broadcast.emit('userlist', users);
+		console.log('User dcd:\n');
+		console.log(users);
 	});
 });
 

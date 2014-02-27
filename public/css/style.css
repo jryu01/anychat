@@ -16,7 +16,7 @@ body {
 }
 .messages-box {
 	max-height: 440px;
-	overflow: scroll;
+	overflow-y: scroll;
 }
 .list {
 	background-color: #D9EDF7;
