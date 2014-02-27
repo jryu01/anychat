@@ -61,6 +61,10 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('new message', msgObj);
 	});
 	socket.on('disconnect', function (data) {
+		console.log('onDisconnect\n');
+		console.log('User: ');
+		console.log(socket.nickname);
+		console.log(users);
 		users.splice(users.indexOf(socket.nickname), 1);
 		socket.broadcast.emit('userlist', users);
 		console.log('User dcd:\n');
