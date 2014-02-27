@@ -61,6 +61,7 @@ io.sockets.on('connection', function (socket) {
 		socket.broadcast.emit('new message', msgObj);
 	});
 	socket.on('disconnect', function (data) {
+		if (socket.nickname === undefined) return;
 		console.log('onDisconnect\n');
 		console.log('User: ');
 		console.log(socket.nickname);
